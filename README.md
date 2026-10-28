@@ -1,19 +1,21 @@
 # Project 6: Predicting River Baseflow with Multiple Linear Regression
 
-CS 5830/6830 course project. We apply multiple linear regression to the RRCA baseflow dataset from the Republican River basin (Colorado, Nebraska, Kansas) to predict monthly baseflow in 42 river segments from 1939 to 2000, and to measure how precipitation, evapotranspiration, and irrigation pumping relate to it.
+CS 5830/6830 course project. We apply multiple linear regression to the RRCA baseflow dataset from the Republican River basin (Colorado, Nebraska, Kansas) to predict monthly baseflow at 46 gaging stations (42 river segment ids) from 1939 to 2000, and to measure how precipitation, evapotranspiration, and irrigation pumping relate to it.
 
 ## Key findings
 
-* Climate, pumping, and date alone explain little of pooled baseflow (test R2 about 0.12) because the 42 segments sit on very different flow scales.
-* Adding segment identity as a one hot encoded categorical variable raises test R2 to about 0.82 and cuts the typical error from 55 to 25 cfs.
-* In 69 percent of segments with irrigation pumping, more pumping is significantly associated with lower baseflow. For a fixed cohort of ten long record segments, average baseflow fell from about 14 cfs in the 1940s to about 8 cfs by the late 1990s while pumping grew from near zero.
+* Climate, pumping, and date alone explain little of pooled baseflow (R2 about 0.12 on a random split) because the stations sit on very different flow scales.
+* Most of the apparent skill from adding each river's identity comes from knowing the river's average size: predicting only each station's average already scores about 0.78 on random months.
+* Trained on 1939 to 1989 and tested on 1990 to 2000, a relative model (baseflow as a share of each station's normal flow) scores R2 0.78, against 0.61 for each station's average, and cuts the typical error from 10.7 to 8.1 cfs. About three quarters of that gain is the downward drift over time.
+* Evapotranspiration lowers baseflow and precipitation raises it (cluster-robust p below 0.001 and about 0.002).
+* At ten stations with complete records, baseflow fell from about 23 cfs (1945 to 1949) to about 14 cfs (1995 to 1999), a 38 percent drop, while pumping grew from near zero. However, once errors are clustered by station, the pumping effect cannot be separated from the time trend (p about 0.28), so the data shows the two moved together, not that pumping caused the decline.
 
 ## Files
 
 * `project6.ipynb` is the full analysis notebook.
-* `project6_report.pdf` is the project report (`project6_report.docx` is the editable version).
-* `project6_slides.pptx` is the presentation deck.
-* `RRCA_baseflow.csv` is the dataset. If it is not in the repository, download it from the course page and place it in this folder next to the notebook.
+* `project6_report.pdf` is the project report.
+* `requirements.txt` lists the Python dependencies.
+* `RRCA_baseflow.csv` is the dataset. Download it from the course page and place it in this folder next to the notebook.
 
 ## How to run
 
@@ -31,9 +33,3 @@ CS 5830/6830 course project. We apply multiple linear regression to the RRCA bas
    ```
 
 3. Open `project6.ipynb` in Jupyter or VS Code, select the `.venv` interpreter as the kernel, and run all cells (Kernel, Restart and Run All). The notebook reads `RRCA_baseflow.csv` by relative path, so run it from this folder.
-
-## Team
-
-[Team member names]
-
-Presentation slides: [insert Google Slides link]

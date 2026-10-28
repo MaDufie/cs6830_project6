@@ -1,2 +1,6 @@
-.ipynb_checkpoints/
-.venv/
+*
+!.gitignore
+!project6.ipynb
+!project6_report.pdf
+!requirements.txt
+!README.md
